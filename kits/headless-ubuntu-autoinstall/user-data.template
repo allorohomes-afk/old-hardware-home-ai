@@ -1,0 +1,68 @@
+#cloud-config
+# Ubuntu Server 24.04 autoinstall for a headless home AI node.
+# build-iso.sh fills every double-underscore placeholder from node.env; the filled copy never goes into git.
+# DANGER: a stick built from this wipes the matching disk of whatever machine boots it, with no prompt.
+autoinstall:
+  version: 1
+  interactive-sections: []          # never stop to ask anything
+  refresh-installer:
+    update: false                   # don't fetch a newer installer mid-install
+  locale: en_US.UTF-8
+  timezone: "__TIMEZONE__"          # set explicitly, so no geo-IP lookup
+  keyboard:
+    layout: us
+  identity:
+    hostname: "__HOSTNAME__"
+    username: "__USERNAME__"
+    realname: "__USERNAME__"
+    password: "__PASSWORD_HASH__"
+  ssh:
+    install-server: true
+    allow-pw: false                 # keys only
+    authorized-keys:
+      - "__SSH_PUBKEY__"
+  network:
+    version: 2
+    ethernets:
+      wired:
+        match:
+          name: "en*"               # every wired port, DHCP from the home router
+        dhcp4: true
+  storage:
+    swap:
+      size: 0                       # no swap partition; add a swapfile later if you want one
+    layout:
+      name: direct                  # GPT, EFI (or BIOS-boot) partition + ext4 root on the whole disk, no LVM
+      match:
+        model: "__DISK_MODEL__"     # only a disk with this model; any other disk fails the match instead of being wiped
+        size: smallest              # if two disks match, take the smaller one
+  apt:
+    geoip: false
+  packages:
+    - openssh-server
+    - curl
+    - git
+    - htop
+    - smartmontools
+    - nvme-cli
+    - build-essential
+    - lm-sensors
+  updates: security
+  drivers:
+    install: false
+  codecs:
+    install: false
+  oem:
+    install: false
+  shutdown: poweroff                # power OFF when done, so the stick can't start a second wipe on reboot
+  late-commands:
+    - curtin in-target -- systemctl enable ssh
+    # firewall: SSH from the home network only, nothing else open
+    - curtin in-target -- ufw allow from __LAN_CIDR__ to any port 22 proto tcp comment 'SSH from home LAN'
+    - sed -i 's/^ENABLED=no/ENABLED=yes/' /target/etc/ufw/ufw.conf
+    # sudo needs the user's password: drop any NOPASSWD rule, and keep cloud-init from adding one at first boot
+    - sh -c 'grep -rl NOPASSWD /target/etc/sudoers.d/ | xargs -r rm -f'
+    - touch /target/etc/cloud/cloud-init.disabled
+    # quieter box: no Ubuntu news fetches in the login banner
+    - sh -c '[ -f /target/etc/default/motd-news ] && sed -i "s/^ENABLED=1/ENABLED=0/" /target/etc/default/motd-news || true'
+    - sh -c 'echo "installed $(date -Iseconds) by autoinstall" > /target/etc/ai-node'
