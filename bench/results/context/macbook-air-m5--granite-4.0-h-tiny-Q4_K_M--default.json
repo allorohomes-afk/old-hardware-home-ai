@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "macbook-air-m5",
+  "machine": "MacBook Air M5 16 GB (2026)",
+  "notes": "",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "arm64",
+    "logical_cores": 10,
+    "cpu": "Apple M5",
+    "physical_cores": 10,
+    "ram_gb": 16.0,
+    "cpu_features": [
+      "neon"
+    ],
+    "os": "macOS 26.6.2",
+    "gpu": null
+  },
+  "variant": "default",
+  "extra_flags": "",
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.15.2"
+  },
+  "model": {
+    "name": "granite-4.0-h-tiny-Q4_K_M",
+    "file": "granite-4.0-h-tiny-Q4_K_M.gguf"
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2074,
+      "prompt_tps": 1118.18,
+      "gen_tps": 66.36,
+      "wall_s": 2.8,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe inventory in the blue shed includes various items such as 38 rolls of ta",
+      "truncated": null,
+      "peak_rss_gb": 4.84
+    },
+    {
+      "ctx": 8192,
+      "prompt_tokens": 8234,
+      "prompt_tps": 1175.31,
+      "gen_tps": 64.44,
+      "wall_s": 8.0,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nIn the inventory, there are various items stored in different locations. The",
+      "truncated": null,
+      "peak_rss_gb": 4.92
+    },
+    {
+      "ctx": 16384,
+      "prompt_tokens": 16519,
+      "prompt_tps": 1173.16,
+      "gen_tps": 64.25,
+      "wall_s": 15.1,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nIn the inventory, there are various items stored in different locations. The",
+      "truncated": null,
+      "peak_rss_gb": 5.02
+    },
+    {
+      "ctx": 32768,
+      "prompt_tokens": 33408,
+      "prompt_tps": 1101.73,
+      "gen_tps": 59.76,
+      "wall_s": 31.4,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe inventory consists of various items stored in different locations. There",
+      "truncated": null,
+      "peak_rss_gb": 5.23
+    }
+  ]
+}

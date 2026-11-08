@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "mac-mini-m2",
+  "machine": "Mac mini M2 8 GB (2023)",
+  "notes": "8 GB machine was using 2.5 GB of swap during the run; 16k timed out",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "arm64",
+    "logical_cores": 8,
+    "cpu": "Apple M2",
+    "physical_cores": 8,
+    "ram_gb": 8.0,
+    "cpu_features": [
+      "neon"
+    ],
+    "os": "macOS 26.4",
+    "gpu": null
+  },
+  "variant": "default",
+  "extra_flags": "",
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.9.6"
+  },
+  "model": {
+    "name": "qwen3:4b-instruct",
+    "file": null
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2264,
+      "prompt_tps": 277.99,
+      "gen_tps": 21.7,
+      "wall_s": 11.2,
+      "found_fact": true,
+      "answer": "4817\n\nThe inventory log details a wide variety of materials stored across different locations within a facility, includi",
+      "truncated": null,
+      "model_mem_gb": 3.1,
+      "gpu_mem_gb": 3.1,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 8192,
+      "prompt_tokens": 9326,
+      "prompt_tps": 168.6,
+      "gen_tps": 5.65,
+      "wall_s": 69.2,
+      "found_fact": true,
+      "answer": "4817\n\nThe inventory spans a wide variety of materials across multiple storage locations, including racks, bays, lofts, s",
+      "truncated": null,
+      "model_mem_gb": 4.28,
+      "gpu_mem_gb": 4.28,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 16384,
+      "error": "timeout: timed out",
+      "peak_rss_gb": null
+    }
+  ]
+}

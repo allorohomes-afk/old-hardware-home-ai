@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "label": "macbook-air-m5",
+  "machine": "MacBook Air M5 16 GB (2026)",
+  "notes": "round 2",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "arm64",
+    "logical_cores": 10,
+    "cpu": "Apple M5",
+    "physical_cores": 10,
+    "ram_gb": 16.0,
+    "cpu_features": [
+      "neon"
+    ],
+    "os": "macOS 26.6.2",
+    "gpu": null
+  },
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.15.2"
+  },
+  "model": {
+    "name": "granite-4.0-h-tiny-Q4_K_M",
+    "file": "granite-4.0-h-tiny-Q4_K_M.gguf",
+    "ctx": 4096
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 2.02,
+  "gen_tps": {
+    "runs": [
+      68.26,
+      69.09,
+      69.15
+    ],
+    "median": 69.09
+  },
+  "prompt_tps": {
+    "runs": [
+      1095.94,
+      1173.03,
+      1173.19
+    ],
+    "median": 1173.03
+  },
+  "quality": {
+    "score": 10,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "43",
+        "ok": true
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Canberra.",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "The word 'house' spelled backwards is 'esuoh'.",
+        "ok": true
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "The train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. To find the arrival time, add the travel time to the departure time. \n\n3:15 PM + 2 hours = 5:15 PM\n5:15 PM + 50 minutes = 5:15 PM + 4",
+        "ok": true
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "Both weigh the same. A kilogram is a kilogram, regardless of the material.",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "3, 7, 19, 25, 42",
+        "ok": true
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Au",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Bo.",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "A leap year has 366 days.",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "Gracias",
+        "ok": true
+      }
+    ]
+  },
+  "peak_rss_gb": 6.49
+}

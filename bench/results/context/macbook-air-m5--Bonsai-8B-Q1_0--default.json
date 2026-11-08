@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "macbook-air-m5",
+  "machine": "MacBook Air M5 16 GB (2026)",
+  "notes": "",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "arm64",
+    "logical_cores": 10,
+    "cpu": "Apple M5",
+    "physical_cores": 10,
+    "ram_gb": 16.0,
+    "cpu_features": [
+      "neon"
+    ],
+    "os": "macOS 26.6.2",
+    "gpu": null
+  },
+  "variant": "default",
+  "extra_flags": "--reasoning-budget 0",
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.15.2"
+  },
+  "model": {
+    "name": "Bonsai-8B-Q1_0",
+    "file": "Bonsai-8B-Q1_0.gguf"
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2268,
+      "prompt_tps": 394.3,
+      "gen_tps": 49.12,
+      "wall_s": 7.0,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is **4817**.\n\nThe inventory includes a variety of materials stored in different locati",
+      "truncated": null,
+      "peak_rss_gb": 1.89
+    },
+    {
+      "ctx": 8192,
+      "prompt_tokens": 9330,
+      "prompt_tps": 301.75,
+      "gen_tps": 14.75,
+      "wall_s": 35.2,
+      "found_fact": true,
+      "answer": "**Access Code for the Blue Shed:** 4817\n\n**Inventory Description:**  \nThe inventory log includes a wide variety of mater",
+      "truncated": null,
+      "peak_rss_gb": 2.98
+    },
+    {
+      "ctx": 16384,
+      "prompt_tokens": 18909,
+      "prompt_tps": 223.68,
+      "gen_tps": 18.29,
+      "wall_s": 88.0,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is **4817**.\n\nThe inventory for the blue shed includes a variety of materials stored i",
+      "truncated": null,
+      "peak_rss_gb": 4.35
+    },
+    {
+      "ctx": 32768,
+      "prompt_tokens": 38302,
+      "prompt_tps": 171.23,
+      "gen_tps": 12.32,
+      "wall_s": 228.8,
+      "found_fact": true,
+      "answer": "**Access Code for the Blue Shed:** 4817\n\n**Inventory Description:**\n\nThe blue shed contains a variety of materials, incl",
+      "truncated": null,
+      "peak_rss_gb": 7.51
+    }
+  ]
+}

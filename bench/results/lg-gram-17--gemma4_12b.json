@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "label": "lg-gram-17",
+  "machine": "LG gram 17 laptop (2024), Core Ultra 7 155H, 16 GB",
+  "notes": "Ollama on Windows, CPU only; test client on another machine over the private network, so no process memory reading; quality from a rerun with thinking off (the first run spent its answer budget thinking)",
+  "date": "2026-11-03",
+  "hardware": {
+    "cpu": "Intel Core Ultra 7 155H",
+    "arch": "x86_64",
+    "physical_cores": 16,
+    "logical_cores": 22,
+    "ram_gb": 16,
+    "cpu_features": [
+      "avx",
+      "f16c",
+      "fma",
+      "avx2",
+      "avx_vnni"
+    ],
+    "gpu": "Intel Arc integrated (unused: CPU-only inference)",
+    "os": "Windows 11",
+    "source": "entered by hand; the test client ran on another machine over the private network"
+  },
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.15.2"
+  },
+  "model": {
+    "name": "gemma4:12b",
+    "family": "gemma4",
+    "params": "11.9B",
+    "quant": "Q4_K_M",
+    "format": "gguf",
+    "thinking_off": true
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 71.77,
+  "gen_tps": {
+    "runs": [
+      7.56,
+      7.62,
+      6.47
+    ],
+    "median": 7.56
+  },
+  "prompt_tps": {
+    "runs": [
+      21.23,
+      17.98,
+      19.02
+    ],
+    "median": 19.02
+  },
+  "quality": {
+    "score": 10,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "43",
+        "ok": true
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Canberra",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "esuoh",
+        "ok": true
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "6:05 PM",
+        "ok": true
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "They weigh the same.",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "3, 7, 19, 25, 42",
+        "ok": true
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Au",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Bo",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "366",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "Gracias",
+        "ok": true
+      }
+    ]
+  },
+  "model_mem_gb": 6.4,
+  "gpu_mem_gb": null,
+  "peak_rss_gb": null,
+  "memory_note": "On Apple Silicon, GPU memory may not count in RSS; see model_mem_gb."
+}

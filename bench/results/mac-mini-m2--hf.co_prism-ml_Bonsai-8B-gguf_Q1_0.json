@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "label": "mac-mini-m2",
+  "machine": "Mac mini M2 8 GB (2023)",
+  "notes": "Ollama, Apple GPU (Metal); process memory reading not valid on this machine (Ollama runs as a system service), so left blank",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "arm64",
+    "logical_cores": 8,
+    "cpu": "Apple M2",
+    "physical_cores": 8,
+    "ram_gb": 8.0,
+    "cpu_features": [
+      "neon"
+    ],
+    "os": "macOS 26.4",
+    "gpu": null
+  },
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.9.6"
+  },
+  "model": {
+    "thinking_off": true,
+    "name": "hf.co/prism-ml/Bonsai-8B-gguf:Q1_0",
+    "family": "qwen3",
+    "params": "8.19B",
+    "quant": "Q1_0",
+    "format": "gguf"
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 3.95,
+  "gen_tps": {
+    "runs": [
+      37.09,
+      38.04,
+      37.9
+    ],
+    "median": 37.9
+  },
+  "prompt_tps": {
+    "runs": [
+      182.2,
+      187.76,
+      178.17
+    ],
+    "median": 182.2
+  },
+  "quality": {
+    "score": 6,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "Okay, let me see. The question is asking for 17 plus 26. Hmm, I need to add these two numbers together. Let me write them down to make sure I have them right.\n\nFirst, I'll write 17 and then 26. So, 17",
+        "ok": false
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Okay, the user is asking for the capital of Australia. Let me think about this. I remember that Australia is a country, and like many nations, it has a capital city. But I need to make sure I'm not mi",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "Okay, the user wants me to spell the word 'house' backwards. Let me think about how to approach this. First, I need to write out the word 'house' and then reverse its letters. \n\nLet me break it down. ",
+        "ok": false
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "Okay, so I need to figure out what time the train arrives if it leaves at 3:15 PM and the trip takes 2 hours 50 minutes. Let me think about this step by step.\n\nFirst, let me break down the trip durati",
+        "ok": false
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "Okay, the question is asking which is heavier: a kilogram of feathers or a kilogram of steel. Hmm, let me think. Both are one kilogram. So, they should weigh the same. But wait, maybe there's somethin",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "Okay, let's see. I need to put these numbers in order from smallest to largest. The numbers given are 42, 7, 19, 3, and 25. Hmm, okay. So first, I should list them out again to make sure I have them r",
+        "ok": false
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Okay, the user is asking for the chemical symbol for gold. Let me think. I remember that elements have symbols, and gold is one of them. But I need to make sure I'm not mixing up any other elements wi",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Okay, let's see. The question is: Tom is taller than Ann. Ann is taller than Bo. Who is the shortest?\n\nHmm, so I need to figure out the order of their heights. Let me break it down step by step.\n\nFirs",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "Okay, so the question is asking how many days are in a leap year. Let me think about this. I remember that leap years are special because they have an extra day. But how many exactly?\n\nWell, a regular",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "Okay, the user wants me to translate \"thank you\" into Spanish. Let me think about this. I remember that \"thank you\" in Spanish is commonly \"gracias.\" But sometimes, depending on the context or formali",
+        "ok": true
+      }
+    ]
+  },
+  "model_mem_gb": 1.7,
+  "gpu_mem_gb": 1.7,
+  "peak_rss_gb": null,
+  "memory_note": "On Apple Silicon, GPU memory may not count in RSS; see model_mem_gb."
+}

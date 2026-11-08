@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "dell-i3-3240",
+  "machine": "Dell OptiPlex 3011 all-in-one, Intel i3-3240, 16 GB",
+  "notes": "",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "x86_64",
+    "logical_cores": 4,
+    "cpu": "Intel(R) Core(TM) i3-3240 CPU @ 3.40GHz",
+    "physical_cores": 2,
+    "cpu_features": [
+      "sse4_2",
+      "avx",
+      "f16c"
+    ],
+    "ram_gb": 15.5,
+    "os": "Ubuntu 24.04.5 LTS",
+    "gpu": null
+  },
+  "variant": "default",
+  "extra_flags": "",
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.12.3"
+  },
+  "model": {
+    "name": "granite-4.0-h-tiny-Q4_K_M",
+    "file": "granite-4.0-h-tiny-Q4_K_M.gguf"
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2074,
+      "prompt_tps": 23.22,
+      "gen_tps": 9.99,
+      "wall_s": 95.7,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe inventory in the blue shed includes various items such as 38 rolls of ta",
+      "truncated": null,
+      "peak_rss_gb": 4.79
+    },
+    {
+      "ctx": 8192,
+      "prompt_tokens": 8234,
+      "prompt_tps": 22.34,
+      "gen_tps": 7.62,
+      "wall_s": 376.9,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nIn the inventory, there are various items stored in different locations. The",
+      "truncated": null,
+      "peak_rss_gb": 4.86
+    },
+    {
+      "ctx": 16384,
+      "prompt_tokens": 16519,
+      "prompt_tps": 21.18,
+      "gen_tps": 5.83,
+      "wall_s": 790.9,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nIn the inventory, there are various items stored in different locations. The",
+      "truncated": null,
+      "peak_rss_gb": 4.95
+    },
+    {
+      "ctx": 32768,
+      "prompt_tokens": 33408,
+      "prompt_tps": 19.07,
+      "gen_tps": 3.85,
+      "wall_s": 1768.0,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe inventory consists of various items stored in different locations. In th",
+      "truncated": null,
+      "peak_rss_gb": 5.15
+    }
+  ]
+}

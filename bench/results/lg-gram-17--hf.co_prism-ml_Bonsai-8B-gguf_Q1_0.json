@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "label": "lg-gram-17",
+  "machine": "LG gram 17 laptop (2024), Core Ultra 7 155H, 16 GB",
+  "notes": "Ollama on Windows, CPU only; test client on another machine over the private network, so no process memory reading; quality not scored: in Ollama 0.40.13 Bonsai's thinking could not be switched off (think:false and /no_think both ignored), so it reasoned out loud and ran out of answer room on 4 of 10. Raw answers kept in quality_raw. Speeds count its thinking tokens, which is still real writing speed.",
+  "date": "2026-11-03",
+  "hardware": {
+    "cpu": "Intel Core Ultra 7 155H",
+    "arch": "x86_64",
+    "physical_cores": 16,
+    "logical_cores": 22,
+    "ram_gb": 16,
+    "cpu_features": [
+      "avx",
+      "f16c",
+      "fma",
+      "avx2",
+      "avx_vnni"
+    ],
+    "gpu": "Intel Arc integrated (unused: CPU-only inference)",
+    "os": "Windows 11",
+    "source": "entered by hand; the test client ran on another machine over the private network"
+  },
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.15.2"
+  },
+  "model": {
+    "thinking_off": false,
+    "name": "hf.co/prism-ml/Bonsai-8B-gguf:Q1_0",
+    "family": "qwen3",
+    "params": "8.19B",
+    "quant": "Q1_0",
+    "format": "gguf"
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 1.97,
+  "gen_tps": {
+    "runs": [
+      12.87,
+      11.3,
+      11.39
+    ],
+    "median": 11.39
+  },
+  "prompt_tps": {
+    "runs": [
+      16.97,
+      14.98,
+      15.36
+    ],
+    "median": 15.36
+  },
+  "model_mem_gb": 1.88,
+  "gpu_mem_gb": null,
+  "peak_rss_gb": null,
+  "memory_note": "On Apple Silicon, GPU memory may not count in RSS; see model_mem_gb.",
+  "quality_raw": {
+    "score": 6,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "Okay, let me see. The question is asking for 17 plus 26. Hmm, I need to add these two numbers together. Let me write them down to make sure I have them right.\n\n17 and 26. Let me line them up by their ",
+        "ok": false
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Okay, the user is asking for the capital of Australia. Let me think about this. I remember that Australia is a country, and like many nations, it has a capital city. But I need to make sure I'm not mi",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "Okay, the user wants me to spell the word 'house' backwards. Let me think about how to approach this. First, I need to write out the word 'house' and then reverse its letters. \n\nLet me break it down. ",
+        "ok": false
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "Okay, so I need to figure out what time the train arrives if it leaves at 3:15 PM and the trip takes 2 hours 50 minutes. Let me think about this step by step.\n\nFirst, let me break down the trip durati",
+        "ok": false
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "Okay, the question is asking which is heavier: a kilogram of feathers or a kilogram of steel. Hmm, let me think. Both are one kilogram. So, they should weigh the same. But wait, maybe there's somethin",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "Okay, let's see. I need to put these numbers in order from smallest to largest. The numbers given are 42, 7, 19, 3, and 25. Hmm, okay. So first, I should list them out again to make sure I have them r",
+        "ok": false
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Okay, the user is asking for the chemical symbol for gold. Let me think. I remember that elements have symbols, and gold is a metal. I think the symbol is Au. Wait, I should check that. Let me recall.",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Okay, let's see. The question is: Tom is taller than Ann. Ann is taller than Bo. Who is the shortest?\n\nHmm, so I need to figure out the order of their heights. Let me break it down step by step.\n\nFirs",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "Okay, so I need to figure out how many days are in a leap year. Let me think about this. I remember that leap years are special because they have an extra day. But I'm not exactly sure how that works.",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "Okay, the user wants me to translate \"thank you\" into Spanish. Let me think about this. I remember that \"thank you\" in Spanish is commonly \"gracias\". But I should check if there are any other possible",
+        "ok": true
+      }
+    ]
+  }
+}

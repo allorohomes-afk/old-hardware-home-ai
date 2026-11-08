@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "hp-envy-m6",
+  "machine": "HP Envy m6 laptop (2013), AMD A10-5750M, 8 GB",
+  "notes": "",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "x86_64",
+    "logical_cores": 4,
+    "cpu": "AMD A10-5750M APU with Radeon(tm) HD Graphics",
+    "physical_cores": 4,
+    "cpu_features": [
+      "sse4_2",
+      "avx",
+      "f16c",
+      "fma"
+    ],
+    "ram_gb": 7.0,
+    "os": "Ubuntu 24.04.5 LTS",
+    "gpu": null
+  },
+  "variant": "default",
+  "extra_flags": "--reasoning-budget 0",
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.12.3"
+  },
+  "model": {
+    "name": "Bonsai-8B-Q1_0",
+    "file": "Bonsai-8B-Q1_0.gguf"
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2268,
+      "prompt_tps": 1.47,
+      "gen_tps": 0.72,
+      "wall_s": 1625.6,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is **4817**.\n\nThe inventory includes a variety of materials stored in different locati",
+      "truncated": null,
+      "peak_rss_gb": 1.87
+    },
+    {
+      "ctx": 8192,
+      "skipped": "predicted 121 min to read (limit 45)"
+    },
+    {
+      "ctx": 16384,
+      "skipped": "predicted 241 min to read (limit 45)"
+    },
+    {
+      "ctx": 32768,
+      "skipped": "predicted 483 min to read (limit 45)"
+    }
+  ]
+}

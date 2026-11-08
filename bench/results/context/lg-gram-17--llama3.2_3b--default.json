@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "lg-gram-17",
+  "machine": "LG gram 17 laptop (2024), Core Ultra 7 155H, 16 GB",
+  "notes": "Ollama on Windows, default server settings (flash attention and KV cache type are server-wide there)",
+  "date": "2026-11-03",
+  "hardware": {
+    "cpu": "Intel Core Ultra 7 155H",
+    "arch": "x86_64",
+    "physical_cores": 16,
+    "logical_cores": 22,
+    "ram_gb": 16,
+    "cpu_features": [
+      "avx",
+      "f16c",
+      "fma",
+      "avx2",
+      "avx_vnni"
+    ],
+    "gpu": "Intel Arc integrated (unused: CPU-only inference)",
+    "os": "Windows 11",
+    "source": "entered by hand; the test client ran on another machine over the private network"
+  },
+  "variant": "default",
+  "extra_flags": "",
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.15.2"
+  },
+  "model": {
+    "name": "llama3.2:3b",
+    "file": null
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2069,
+      "prompt_tps": 71.64,
+      "gen_tps": 11.55,
+      "wall_s": 34.6,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe blue shed contains a variety of materials, including 89 coils of wire, 6",
+      "model_mem_gb": 2.39,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 8192,
+      "prompt_tokens": 8229,
+      "prompt_tps": 51.62,
+      "gen_tps": 6.02,
+      "wall_s": 167.8,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe blue shed contains a variety of inventory items, including 17 sheets of ",
+      "model_mem_gb": 3.19,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 16384,
+      "prompt_tokens": 16514,
+      "prompt_tps": 35.71,
+      "gen_tps": 3.0,
+      "wall_s": 474.7,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe inventory for the blue shed includes 3 cans of paint, last checked on da",
+      "model_mem_gb": 4.15,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 32768,
+      "prompt_tokens": 16642,
+      "prompt_tps": 35.87,
+      "gen_tps": 2.97,
+      "wall_s": 480.9,
+      "found_fact": false,
+      "answer": "There is no access code for the blue shed. However, I can provide you with the information about the inventory stored in",
+      "model_mem_gb": 6.29,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null,
+      "truncated": true,
+      "note": "Ollama cut the prompt to ~16.6k tokens; not a real 32k result"
+    }
+  ]
+}

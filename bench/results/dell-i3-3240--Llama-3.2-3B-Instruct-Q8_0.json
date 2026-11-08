@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "label": "dell-i3-3240",
+  "machine": "Dell OptiPlex 3011 all-in-one, Intel i3-3240, 16 GB",
+  "notes": "round 2",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "x86_64",
+    "logical_cores": 4,
+    "cpu": "Intel(R) Core(TM) i3-3240 CPU @ 3.40GHz",
+    "physical_cores": 2,
+    "cpu_features": [
+      "sse4_2",
+      "avx",
+      "f16c"
+    ],
+    "ram_gb": 15.5,
+    "os": "Ubuntu 24.04.5 LTS",
+    "gpu": null
+  },
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.12.3"
+  },
+  "model": {
+    "name": "Llama-3.2-3B-Instruct-Q8_0",
+    "file": "Llama-3.2-3B-Instruct-Q8_0.gguf",
+    "ctx": 4096
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 12.06,
+  "gen_tps": {
+    "runs": [
+      5.31,
+      5.36,
+      5.4
+    ],
+    "median": 5.36
+  },
+  "prompt_tps": {
+    "runs": [
+      8.14,
+      8.13,
+      8.14
+    ],
+    "median": 8.14
+  },
+  "quality": {
+    "score": 10,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "43",
+        "ok": true
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Canberra.",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "esuoh",
+        "ok": true
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "To find the arrival time, we need to add the travel time to the departure time.\n\nDeparture time: 3:15 PM\nTravel time: 2 hours 50 minutes\n\nFirst, let's convert the travel time to just hours:\n2 hours 50",
+        "ok": true
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "They are equal.",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "3, 7, 19, 25, 42",
+        "ok": true
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Au",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Bo.",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "366",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "Gracias.",
+        "ok": true
+      }
+    ]
+  },
+  "peak_rss_gb": 4.71
+}

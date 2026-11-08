@@ -14,11 +14,12 @@ laptops only see **half** of them (4 GB).
 
 ## Why
 
-DDR3 chips come in sizes. Older memory controllers from that era (AMD's 2012–2013 laptop chips, and some Intel
-ones from the same years) were built for chips up to **4 Gbit** each. Newer 8 GB sticks use eight **8 Gbit**
-chips, and the old controller can only reach half of each one.
+DDR3 chips come in sizes. This laptop's memory controller (AMD "Richland", 2013) was built for chips up to
+**4 Gbit** each. Newer 8 GB sticks use eight **8 Gbit** chips, and this controller can only reach half of each
+one. Other machines from the same years may share the limit; check your model's specs or forums before buying.
 
-An 8 GB stick made from sixteen 4 Gbit chips (eight on each side) works fine.
+An 8 GB stick made from sixteen 4 Gbit chips (eight on each side) is what this controller was designed for, so it
+should work. **We haven't tested one yet**; we'll update this page when we have.
 
 ## How to buy the right stick
 
@@ -32,13 +33,13 @@ Look for all three:
 
 ## Things that do NOT fix it
 
-- Drivers, kernel settings or a different OS. The firmware hands the OS a memory map that's already half size.
+- Drivers or kernel settings. The firmware hands the OS a memory map that's already half size, before any OS
+  loads. (We haven't tried Windows on this laptop with this stick, but the firmware map applies to it too.)
 - BIOS settings. The HP firmware on this laptop has no memory options.
 
 ## If you already bought the wrong stick
 
-Return it if you can. It still works as a 4 GB stick in these laptops, and at full 8 GB in newer machines
-(2015+).
+Return it if you can. In this laptop it still works, as a 4 GB stick.
 
 ## Side note: reading the stick's label from Linux didn't work
 

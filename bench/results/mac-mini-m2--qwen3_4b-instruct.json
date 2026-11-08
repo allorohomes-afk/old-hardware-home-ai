@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "label": "mac-mini-m2",
+  "machine": "Mac mini M2 8 GB (2023)",
+  "notes": "Ollama, Apple GPU (Metal); process memory reading not valid on this machine (Ollama runs as a system service), so left blank",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "arm64",
+    "logical_cores": 8,
+    "cpu": "Apple M2",
+    "physical_cores": 8,
+    "ram_gb": 8.0,
+    "cpu_features": [
+      "neon"
+    ],
+    "os": "macOS 26.4",
+    "gpu": null
+  },
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.9.6"
+  },
+  "model": {
+    "thinking_off": true,
+    "name": "qwen3:4b-instruct",
+    "family": "qwen3",
+    "params": "4.0B",
+    "quant": "Q4_K_M",
+    "format": "gguf"
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 9.2,
+  "gen_tps": {
+    "runs": [
+      26.15,
+      23.37,
+      21.11
+    ],
+    "median": 23.37
+  },
+  "prompt_tps": {
+    "runs": [
+      279.19,
+      275.03,
+      257.66
+    ],
+    "median": 275.03
+  },
+  "quality": {
+    "score": 9,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "43",
+        "ok": true
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Canberra",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "esuoh",
+        "ok": true
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "We start with the departure time: **3:15 PM**  \nThe trip takes: **2 hours 50 minutes**\n\n### Step 1: Add 2 hours to 3:15 PM\n3:15 PM + 2 hours = **5:15 PM**\n\n### Step 2: Add 50 minutes to 5:15 PM\n5:15 P",
+        "ok": false
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "Neither \u2014 they weigh the same: one kilogram.",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "3, 7, 19, 25, 42",
+        "ok": true
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Au",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Bo",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "366",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "Gracias",
+        "ok": true
+      }
+    ]
+  },
+  "model_mem_gb": 3.18,
+  "gpu_mem_gb": 3.18,
+  "peak_rss_gb": null,
+  "memory_note": "On Apple Silicon, GPU memory may not count in RSS; see model_mem_gb."
+}

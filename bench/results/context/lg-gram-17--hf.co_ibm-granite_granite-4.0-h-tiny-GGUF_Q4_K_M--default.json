@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "lg-gram-17",
+  "machine": "LG gram 17 laptop (2024), Core Ultra 7 155H, 16 GB",
+  "notes": "",
+  "date": "2026-11-03",
+  "hardware": {
+    "cpu": "Intel Core Ultra 7 155H",
+    "arch": "x86_64",
+    "physical_cores": 16,
+    "logical_cores": 22,
+    "ram_gb": 16,
+    "cpu_features": [
+      "avx",
+      "f16c",
+      "fma",
+      "avx2",
+      "avx_vnni"
+    ],
+    "gpu": "Intel Arc integrated (unused: CPU-only inference)",
+    "os": "Windows 11",
+    "source": "entered by hand; the test client ran on another machine over the private network"
+  },
+  "variant": "default",
+  "extra_flags": "",
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.15.2"
+  },
+  "model": {
+    "name": "hf.co/ibm-granite/granite-4.0-h-tiny-GGUF:Q4_K_M",
+    "file": null
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2074,
+      "prompt_tps": 123.15,
+      "gen_tps": 28.69,
+      "wall_s": 21.4,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nThe inventory in the blue shed includes various items such as 38 rolls of ta",
+      "model_mem_gb": 4.36,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 8192,
+      "prompt_tokens": 8234,
+      "prompt_tps": 117.37,
+      "gen_tps": 24.88,
+      "wall_s": 73.7,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nIn the inventory, there are various items stored in different locations. The",
+      "model_mem_gb": 4.48,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 16384,
+      "prompt_tokens": 16519,
+      "prompt_tps": 104.33,
+      "gen_tps": 17.95,
+      "wall_s": 162.3,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817.\n\nIn the inventory, there are various items stored in different locations. The",
+      "model_mem_gb": 4.57,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null
+    },
+    {
+      "ctx": 32768,
+      "prompt_tokens": 16642,
+      "prompt_tps": 96.46,
+      "gen_tps": 17.69,
+      "wall_s": 177.0,
+      "found_fact": false,
+      "answer": "The access code for the blue shed is 482.\n\nThe blue shed contains a variety of items stored in different locations withi",
+      "model_mem_gb": 4.91,
+      "gpu_mem_gb": null,
+      "peak_rss_gb": null,
+      "truncated": true,
+      "note": "Ollama cut the prompt to 16,642 tokens, dropping the fact; invalid as a 32k result"
+    }
+  ]
+}

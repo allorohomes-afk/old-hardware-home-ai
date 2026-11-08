@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "dell-i3-3240",
+  "machine": "Dell OptiPlex 3011 all-in-one, Intel i3-3240, 16 GB",
+  "notes": "",
+  "date": "2026-11-03",
+  "hardware": {
+    "arch": "x86_64",
+    "logical_cores": 4,
+    "cpu": "Intel(R) Core(TM) i3-3240 CPU @ 3.40GHz",
+    "physical_cores": 2,
+    "cpu_features": [
+      "sse4_2",
+      "avx",
+      "f16c"
+    ],
+    "ram_gb": 15.5,
+    "os": "Ubuntu 24.04.5 LTS",
+    "gpu": null
+  },
+  "variant": "fa-kvq8",
+  "extra_flags": "--reasoning-budget 0 -fa on -ctk q8_0 -ctv q8_0",
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.12.3"
+  },
+  "model": {
+    "name": "Bonsai-8B-Q1_0",
+    "file": "Bonsai-8B-Q1_0.gguf"
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2268,
+      "prompt_tps": 2.35,
+      "gen_tps": 1.61,
+      "wall_s": 1003.1,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is **4817**.\n\nThe inventory includes a variety of materials stored in different locati",
+      "peak_rss_gb": 1.55
+    },
+    {
+      "ctx": 8192,
+      "skipped": "predicted 76 min to read (limit 45)"
+    },
+    {
+      "ctx": 16384,
+      "skipped": "predicted 151 min to read (limit 45)"
+    },
+    {
+      "ctx": 32768,
+      "skipped": "predicted 302 min to read (limit 45)"
+    }
+  ]
+}

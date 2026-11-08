@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "label": "lg-gram-17",
+  "machine": "LG gram 17 laptop (2024), Core Ultra 7 155H, 16 GB",
+  "notes": "round 2; Ollama on Windows, CPU only; client on another machine",
+  "date": "2026-11-03",
+  "hardware": {
+    "cpu": "Intel Core Ultra 7 155H",
+    "arch": "x86_64",
+    "physical_cores": 16,
+    "logical_cores": 22,
+    "ram_gb": 16,
+    "cpu_features": [
+      "avx",
+      "f16c",
+      "fma",
+      "avx2",
+      "avx_vnni"
+    ],
+    "gpu": "Intel Arc integrated (unused: CPU-only inference)",
+    "os": "Windows 11",
+    "source": "entered by hand; the test client ran on another machine over the private network"
+  },
+  "software": {
+    "backend": "ollama",
+    "runtime": "ollama 0.40.13",
+    "python": "3.15.2"
+  },
+  "model": {
+    "thinking_off": null,
+    "name": "hf.co/ibm-granite/granite-4.0-h-tiny-GGUF:Q4_K_M",
+    "family": "granitehybrid",
+    "params": "6.94B",
+    "quant": "Q4_K_M",
+    "format": "gguf"
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 6.75,
+  "gen_tps": {
+    "runs": [
+      30.16,
+      30.58,
+      29.72
+    ],
+    "median": 30.16
+  },
+  "prompt_tps": {
+    "runs": [
+      137.38,
+      119.0,
+      119.72
+    ],
+    "median": 119.72
+  },
+  "quality": {
+    "score": 10,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "43",
+        "ok": true
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Canberra.",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "The word 'house' spelled backwards is 'esuoh'.",
+        "ok": true
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "The train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. To find the arrival time, add the duration of the trip to the departure time. \n\n3:15 PM + 2 hours = 5:15 PM\n5:15 PM + 50 minutes = 5:",
+        "ok": true
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "Both weigh the same. A kilogram is a kilogram regardless of the material.",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "3, 7, 19, 25, 42",
+        "ok": true
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Au",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Bo.",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "A leap year has 366 days.",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "Gracias",
+        "ok": true
+      }
+    ]
+  },
+  "model_mem_gb": 4.38,
+  "gpu_mem_gb": null,
+  "peak_rss_gb": null,
+  "memory_note": "On Apple Silicon, GPU memory may not count in RSS; see model_mem_gb."
+}

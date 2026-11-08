@@ -19,19 +19,21 @@ free and open source.
 
 | Finding | Short version | Details |
 |---|---|---|
-| Old desktops are usable | A 2012 Intel i3 with 16 GB RAM writes **6–11 tokens per second** (roughly 5–8 words) with a small modern model. That's about reading speed. | [findings/01](findings/01-speeds-on-old-machines.md) |
-| Pick the model before the hardware | IBM Granite 4.0 H-Tiny (a "mixture of experts" model: 7B in size, only ~1B working at a time) wrote **~1.7× faster** than Llama 3.2 3B on the same old desktop, with the same quiz score. It needs more RAM (about 7 GB). | [findings/01](findings/01-speeds-on-old-machines.md) |
+| Old desktops are usable | A 2012 Intel i3 with 16 GB RAM wrote **6–11 tokens per second** (roughly 5–8 words) with small modern models: about reading speed. | [findings/01](findings/01-speeds-on-old-machines.md) |
+| Pick the model before the hardware | IBM Granite 4.0 H-Tiny (7B in size, only ~1B working at a time) wrote about **1.7× faster** than Llama 3.2 3B on the same machines, and held its speed far better in long chats. It needs more RAM (about 7 GB). The old-desktop comparison is being rerun under identical conditions. | [findings/01](findings/01-speeds-on-old-machines.md) |
 | Old AMD laptops have a RAM trap | Many 2012–2014 AMD laptops only see **half** of a modern 8 GB stick. Check the chip count before you buy. | [findings/02](findings/02-ram-trap-old-amd-laptops.md) |
 | Cooling won't make a locked laptop faster | Our 2013 laptop's turbo boost is locked off in firmware; it holds 2.5 GHz under load at 82–85 °C either way. | [findings/03](findings/03-laptop-boost-locked.md) |
 | Check speculative decoding is really on | Our first test showed no gain, but the server wasn't actually guessing (a flag changed in llama.cpp). Rerun pending; the page shows how to check. | [findings/04](findings/04-speculative-decoding.md) |
-| Used servers: beeps are usually RAM | A used tower server gave 6 beeps and a blinking amber light: the RAM stick had come loose in shipping. | [findings/05](findings/05-used-server-first-boot.md) |
+| Used servers: check the RAM first | Our used tower server gave 6 beeps and a blinking amber light: its RAM stick had come loose in shipping. | [findings/05](findings/05-used-server-first-boot.md) |
 | Power is cheap | An old tower server should idle around 25–35 W, about **$35–45 a year** (estimate, measurement pending). | [findings/06](findings/06-power-draw.md) |
 
 ## What's in here
 
 - `findings/`: one page per thing we learned, with the numbers.
 - `kits/headless-ubuntu-autoinstall/`: build a USB stick that installs Ubuntu Server on a spare PC with **no
-  screen, keyboard or mouse**, ready for SSH. This is how we set up the tower server.
+  screen, keyboard or mouse**, ready for SSH. **Status: the install runs and finishes; first boot after install
+  is not yet verified** (see [findings/05](findings/05-used-server-first-boot.md)).
+- `bench/`: the exact benchmark script and every raw result file behind our speed tables.
 - `tools/`: small scripts we used to measure things (real CPU clock on old AMD chips, speculative-decoding test).
 - `scripts/privacy-check.sh`: the scan we run before every push, so no addresses, names or serial numbers leak.
 
@@ -57,8 +59,8 @@ free and open source.
 
 ## Add your machine
 
-Ran something on your own old hardware? Open an issue with the machine, RAM, CPU, model, and the words per
-second you got. The more machines, the more useful this gets for everyone.
+Ran something on your own old hardware? Run [`bench/bench.py`](bench/) and open an issue with the result file, or
+just tell us the machine, RAM, CPU, model and the tokens per second you got. The more machines, the more useful this gets for everyone.
 
 ## License
 

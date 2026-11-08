@@ -1,0 +1,11 @@
+{
+  "cpu": "Intel Core Ultra 7 155H",
+  "arch": "x86_64",
+  "physical_cores": 16,
+  "logical_cores": 22,
+  "ram_gb": 16,
+  "cpu_features": ["avx", "f16c", "fma", "avx2", "avx_vnni"],
+  "gpu": "Intel Arc integrated (unused: CPU-only inference)",
+  "os": "Windows 11",
+  "source": "entered by hand; the test client ran on another machine over the private network"
+}
