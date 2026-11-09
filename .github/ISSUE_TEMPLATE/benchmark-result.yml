@@ -1,0 +1,67 @@
+name: Benchmark result
+description: Share how fast AI ran on your machine (failures welcome too)
+title: "[Benchmark] <machine> + <model>"
+labels: ["benchmark"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for adding your machine! Before posting, remove serial numbers, IP addresses, network names and
+        personal names (from screenshots too).
+  - type: input
+    id: machine
+    attributes:
+      label: Machine
+      description: Make, model and year, e.g. "Dell OptiPlex 3010, 2012"
+    validations:
+      required: true
+  - type: input
+    id: cpu
+    attributes:
+      label: CPU
+      description: Exact model, e.g. "Intel Core i3-3240". On Linux, `lscpu | grep "Model name"`.
+    validations:
+      required: true
+  - type: input
+    id: ram
+    attributes:
+      label: RAM
+      description: Total and type, e.g. "16 GB DDR3-1600"
+    validations:
+      required: true
+  - type: input
+    id: software
+    attributes:
+      label: Software and version
+      description: e.g. "llama.cpp b11669" or "Ollama 0.12", and the operating system
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model and size
+      description: e.g. "Granite 4.0 H-Tiny Q4_K_M"
+    validations:
+      required: true
+  - type: input
+    id: writing
+    attributes:
+      label: Writing speed (tokens per second)
+      description: How fast it writes its answer
+  - type: input
+    id: reading
+    attributes:
+      label: Reading speed (tokens per second)
+      description: How fast it takes in the prompt (optional)
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Was it usable? Anything that went wrong, settings you changed, or a bench.py result file (paste or attach).
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I removed serial numbers, IP addresses, network names and anything personal.
+          required: true

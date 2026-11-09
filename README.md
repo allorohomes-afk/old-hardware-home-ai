@@ -34,6 +34,11 @@ what fails.
 | Used servers: RAM, battery, CPU | Our used tower server's RAM had come loose in shipping, its BIOS battery was dead, and its CPU turned out to be a Pentium with no AVX. Check all three. | [findings/05](findings/05-used-server-first-boot.md) |
 | Power is cheap | An old tower server should idle around 25–35 W, about **$35–45 a year** (estimate, measurement pending). | [findings/06](findings/06-power-draw.md) |
 
+## Standing on shoulders
+
+Everything here runs on other people's free and open-source work. [Projects we stand on](PROJECTS-WE-STAND-ON.md)
+lists what we used, what it did for us, and how to support it.
+
 ## What's in here
 
 - `findings/`: one page per thing we learned, with the numbers.
@@ -66,8 +71,8 @@ what fails.
 
 ## Add your machine
 
-Ran something on your own old hardware? Run [`bench/bench.py`](bench/) and open an issue with the result file, or
-just tell us the machine, RAM, CPU, model and the tokens per second you got. The more machines, the more useful this gets for everyone.
+Ran something on your own old hardware? Run [`bench/bench.py`](bench/) and open a **Benchmark result** issue, or
+just tell us the machine, RAM, CPU, model and the tokens per second you got. See [CONTRIBUTING](CONTRIBUTING.md). The more machines, the more useful this gets for everyone.
 
 ## License
 
