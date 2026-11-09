@@ -1,0 +1,7 @@
+# GitHub Pages site for this repo: https://homeai.alloro.systems
+# Pages renders README.md as the home page and every .md file as a page, linked as they are on GitHub.
+title: Old Hardware, Home AI
+description: >-
+  Helping families at every income level, in the US and worldwide, run powerful private AI at home on old,
+  cheap computers. Measured results, failures included. Free and open source.
+theme: jekyll-theme-cayman

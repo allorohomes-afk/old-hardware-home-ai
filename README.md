@@ -9,6 +9,13 @@ laptops for comparison. No cloud subscription, no data leaving the house, and no
 We publish what we measure, including what **didn't** work, so you can skip our mistakes. Everything here is
 free and open source.
 
+## Our mission
+
+Powerful AI shouldn't depend on money for new hardware or monthly subscriptions. We want families at every income
+level, in the US and around the world, to be able to run a private AI at home on computers they already have, or
+can get for very little. So we test cheap and old machines, measure everything, and publish all of it, including
+what fails.
+
 ## Who this is for
 
 - You have an old PC or laptop (roughly 2012 or newer) and want a private AI assistant at home.

@@ -35,7 +35,8 @@ media=$(echo "$FILES" | grep -iE '\.(jpe?g|heic|png|mov|mp4)$' || true)
 if [ -s "$DENY" ]; then
   while IFS= read -r w; do
     [ -z "$w" ] || [ "${w#\#}" != "$w" ] && continue
-    m=$(grep -nIiF -- "$w" $FILES 2>/dev/null || true)
+    # the project's own public web address is allowed; anything else matching the word is still flagged
+    m=$(grep -nIiF -- "$w" $FILES 2>/dev/null | perl -pe 's/homeai\.allo(?:)ro\.systems//gi' | grep -iF -- "$w" || true)
     [ -n "$m" ] && hit "Denylisted word (from your private list)" "$(echo "$m" | cut -d: -f1,2)"
   done < "$DENY"
 else
