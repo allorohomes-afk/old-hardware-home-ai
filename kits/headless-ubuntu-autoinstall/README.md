@@ -4,10 +4,10 @@ Turn a spare PC into an AI node **without a screen, keyboard or mouse**: build a
 plug it into the spare one, power on, wait, and log in over SSH.
 
 > **STATUS (November 2026): partly verified.** On our first machine (a Dell PowerEdge T20) the install ran
-> unattended and powered off by itself after about 14 minutes, which means it finished. **The first boot after
-> install has NOT been verified yet:** that machine didn't start Ubuntu, and we haven't seen its screen yet
-> (see [findings/05](../../findings/05-used-server-first-boot.md)). Until that's resolved, keep a way to see
-> the screen on hand, and expect to fix the boot order in the BIOS.
+> unattended and finished in about 14 minutes, and Ubuntu booted from the disk. That first boot found a **bug in
+> this kit**: the network, SSH key and password-login settings never applied (see
+> [findings/05](../../findings/05-used-server-first-boot.md), Problem 3). **The kit is fixed, but a full reinstall
+> with the fixed kit hasn't been done yet.** Keep a screen and keyboard on hand for the first boot.
 
 The result: Ubuntu Server 24.04 LTS, your SSH key only (no password logins), a firewall that allows SSH from your
 home network and nothing else, and sudo that asks for a password.

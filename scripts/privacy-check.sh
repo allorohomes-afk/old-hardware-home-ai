@@ -23,7 +23,7 @@ macs=$(grep -nIoiE '\b([0-9a-f]{1,2}:){5}[0-9a-f]{1,2}\b' $FILES 2>/dev/null || 
 emails=$(grep -nIoE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' $FILES 2>/dev/null | grep -v 'noreply@anthropic.com' || true)
 [ -n "$emails" ] && hit "Email addresses" "$emails"
 
-homes=$(grep -nIoE '/(Users|home)/[A-Za-z0-9._-]+' $FILES 2>/dev/null || true)
+homes=$(grep -nIoE '/(Users|home)/[A-Za-z0-9._-]+' $FILES 2>/dev/null | grep -v '/home/__USERNAME__' || true)
 [ -n "$homes" ] && hit "Home-folder paths with a user name" "$homes"
 
 keys=$(grep -nIlE 'BEGIN (OPENSSH|RSA|EC|DSA) PRIVATE KEY|\$6\$[./A-Za-z0-9]{8,}\$' $FILES 2>/dev/null || true)

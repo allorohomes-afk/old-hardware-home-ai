@@ -60,9 +60,29 @@ autoinstall:
     # firewall: SSH from the home network only, nothing else open
     - curtin in-target -- ufw allow from __LAN_CIDR__ to any port 22 proto tcp comment 'SSH from home LAN'
     - sed -i 's/^ENABLED=no/ENABLED=yes/' /target/etc/ufw/ufw.conf
-    # sudo needs the user's password: drop any NOPASSWD rule, and keep cloud-init from adding one at first boot
+    # sudo needs the user's password: drop any NOPASSWD rule
     - sh -c 'grep -rl NOPASSWD /target/etc/sudoers.d/ | xargs -r rm -f'
+    # cloud-init stays OFF on the installed system: nothing runs or downloads at first boot, and it can't add a
+    # NOPASSWD rule back. But cloud-init is also what would apply the network, ssh and allow-pw settings above at
+    # first boot, so write those three here directly (without this, the first boot has no network at all).
     - touch /target/etc/cloud/cloud-init.disabled
+    - |
+      cat > /target/etc/netplan/60-wired.yaml <<'EOF'
+      network:
+        version: 2
+        ethernets:
+          wired:
+            match:
+              name: "en*"
+            dhcp4: true
+      EOF
+      chmod 600 /target/etc/netplan/60-wired.yaml
+    - |
+      install -d -m 700 /target/home/__USERNAME__/.ssh
+      echo '__SSH_PUBKEY__' > /target/home/__USERNAME__/.ssh/authorized_keys
+      chmod 600 /target/home/__USERNAME__/.ssh/authorized_keys
+    - curtin in-target -- chown -R __USERNAME__:__USERNAME__ /home/__USERNAME__/.ssh
+    - sh -c 'echo "PasswordAuthentication no" > /target/etc/ssh/sshd_config.d/10-keys-only.conf'
     # quieter box: no Ubuntu news fetches in the login banner
     - sh -c '[ -f /target/etc/default/motd-news ] && sed -i "s/^ENABLED=1/ENABLED=0/" /target/etc/default/motd-news || true'
     - sh -c 'echo "installed $(date -Iseconds) by autoinstall" > /target/etc/ai-node'

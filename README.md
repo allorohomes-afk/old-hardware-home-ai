@@ -24,15 +24,15 @@ free and open source.
 | Old AMD laptops have a RAM trap | Many 2012–2014 AMD laptops only see **half** of a modern 8 GB stick. Check the chip count before you buy. | [findings/02](findings/02-ram-trap-old-amd-laptops.md) |
 | Cooling won't make a locked laptop faster | Our 2013 laptop's turbo boost is locked off in firmware; it holds 2.5 GHz under load at 82–85 °C either way. | [findings/03](findings/03-laptop-boost-locked.md) |
 | Check speculative decoding is really on | Our first test showed no gain, but the server wasn't actually guessing (a flag changed in llama.cpp). Rerun pending; the page shows how to check. | [findings/04](findings/04-speculative-decoding.md) |
-| Used servers: check the RAM first | Our used tower server gave 6 beeps and a blinking amber light: its RAM stick had come loose in shipping. | [findings/05](findings/05-used-server-first-boot.md) |
+| Used servers: RAM, battery, CPU | Our used tower server's RAM had come loose in shipping, its BIOS battery was dead, and its CPU turned out to be a Pentium with no AVX. Check all three. | [findings/05](findings/05-used-server-first-boot.md) |
 | Power is cheap | An old tower server should idle around 25–35 W, about **$35–45 a year** (estimate, measurement pending). | [findings/06](findings/06-power-draw.md) |
 
 ## What's in here
 
 - `findings/`: one page per thing we learned, with the numbers.
 - `kits/headless-ubuntu-autoinstall/`: build a USB stick that installs Ubuntu Server on a spare PC with **no
-  screen, keyboard or mouse**, ready for SSH. **Status: the install runs and finishes; first boot after install
-  is not yet verified** (see [findings/05](findings/05-used-server-first-boot.md)).
+  screen, keyboard or mouse**, ready for SSH. **Status: the install and first boot work; a bug we found at first
+  boot is fixed, and the fix awaits a full reinstall test** (see [findings/05](findings/05-used-server-first-boot.md)).
 - `bench/`: the exact benchmark script and every raw result file behind our speed tables.
 - `tools/`: small scripts we used to measure things (real CPU clock on old AMD chips, speculative-decoding test).
 - `scripts/privacy-check.sh`: the scan we run before every push, so no addresses, names or serial numbers leak.
