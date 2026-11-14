@@ -1,6 +1,6 @@
 # 01. How fast is AI on old machines?
 
-Measured 2–3 November 2026 with [`bench/bench.py`](../bench/). **Every raw result file is in
+Measured 2–3 and 13 November 2026 with [`bench/bench.py`](../bench/). **Every raw result file is in
 [`bench/results/`](../bench/results/)**, so you can check any number here.
 
 ## How we tested
@@ -27,11 +27,16 @@ Runtime: llama.cpp `llama-server` build b11669, Ubuntu Server 24.04. All models 
 | same | Bonsai 8B, Q1_0 | 2.5 | 2.8 | 2.0 | 9/10 | A |
 | 2013 laptop, AMD A10-5750M, 8 GB DDR3L | Llama 3.2 3B Instruct | 2.5 | 6.8 | 2.7 | 10/10 | C |
 | same | Bonsai 8B, Q1_0 | 1.4 | 1.5 | 2.0 | 9/10 | C |
+| same | Liquid AI LFM2-8B-A1B | **5.1** | 12.3 | 5.3 | 9/10 | D |
+| same | IBM Granite 4.0 H-Tiny | 4.6 | 11.3 | 6.9 | 10/10 | D |
+| same | Qwen3 8B | 1.0 | 2.4 | 6.8 | 9/10 | D |
 
 **Conditions:**
 - **A** (2 Nov): run at the lowest CPU priority, with a chat web app and a second AI server sitting idle in the background.
 - **B** (3 Nov): a separate session ("round 2"), without the lowest-priority setting.
 - **C** (2 Nov): a small idle network service in the background; plugged in, lid closed.
+- **D** (13 Nov): the three models run back to back in one session, with the same small idle network service in
+  the background. "Thinking" was switched off (`--reasoning-budget 0`) so every model was timed on answers.
 
 **Read across the A and B rows with care.** They weren't run back to back under identical conditions, and
 we're rerunning them that way.
@@ -72,7 +77,8 @@ Llama 3.2 3B on the 2012 desktop failed with a server error, so it isn't in the 
    under the same conditions, Granite was 1.66× faster.
 
    Why it's fast: Granite 4.0 H-Tiny is about 7B in total, but only about 1B is active per token (a "mixture of
-   experts"). The cost is RAM: it peaked at about 7 GB, so it suits 16 GB machines, not 8 GB ones.
+   experts"). The cost is RAM: it peaked at about 7 GB. It did run on our 8 GB laptop (6.9 GB peak at a 4,096-token
+   context), but with almost nothing to spare, so long chats there would run out of memory.
 2. **Granite holds its speed in long chats much better than Llama 3.2 3B.** On the 2024 laptop, at 16k tokens,
    Granite kept 63% of its speed and Llama kept 26%. That comes mainly from Granite's **hybrid design**: most of
    its layers are Mamba-2 layers, whose memory doesn't grow with the conversation the way a standard
@@ -91,14 +97,21 @@ Llama 3.2 3B on the 2012 desktop failed with a server error, so it isn't in the 
 5. **Bonsai 8B (a 1-bit model) wasn't worth it on these two old machines.** It uses little RAM, but it was slower
    than Llama 3.2 3B on both. That's one model at one stage of 1-bit support in llama.cpp; other 1-bit models, or
    later builds, may do better.
-6. **An 8B model on a 2013 laptop is too slow for chat:** Qwen3 8B wrote 1.3 tok/s there, in a separate test
-   ([findings/04](04-speculative-decoding.md)). Use 3–4B models on machines like that, or give them background
-   jobs where speed doesn't matter.
+6. **A regular 8B model on a 2013 laptop is too slow for chat:** Qwen3 8B wrote 1.0 tok/s there (1.3 in a
+   separate test, [findings/04](04-speculative-decoding.md)). That's about 3½ minutes for a 150-word answer.
+   Give models like that background jobs where speed doesn't matter.
+7. **"Mixture of experts" models change what an 8 GB laptop can do.** On the 2013 laptop, run back to back,
+   Liquid AI's LFM2-8B-A1B wrote 5.1 tok/s and Granite 4.0 H-Tiny 4.6, against 1.0 for the regular Qwen3 8B and
+   2.5 for Llama 3.2 3B in an earlier session. Both are about 8B in size but only ~1B works on each word.
+   LFM2 used less RAM (5.3 GB vs 6.9) and loaded in 2.4 s instead of 15.6. Granite got 10/10 on the sanity check,
+   LFM2 9/10; neither number says much about answer quality. **License note:** Granite is Apache 2.0; LFM2 uses
+   Liquid AI's own LFM Open License, which is free for personal use but isn't an OSI open-source license (read
+   it before building a product on it). We haven't tested either at long chat lengths on this laptop yet.
 
 ## Rule of thumb (from our machines only)
 
 | Your RAM | Start with | What we saw on 2012–2013 CPUs |
 |---|---|---|
-| 8 GB | Llama 3.2 3B or Qwen3 4B Instruct (Q4_K_M) | Llama 3.2 3B: 2.5 tok/s on the 2013 AMD laptop; 6.4 tok/s on the 2012 Intel desktop (which has 16 GB, but the model only needs ~3) |
+| 8 GB | LFM2-8B-A1B or Granite 4.0 H-Tiny (Q4_K_M), keeping chats short; Llama 3.2 3B if RAM is tight | 2013 AMD laptop: LFM2-8B-A1B 5.1 tok/s, Granite 4.6, Llama 3.2 3B 2.5 |
 | 16 GB | IBM Granite 4.0 H-Tiny (Q4_K_M) | 11.1 tok/s (2012 Intel desktop) |
 | 32 GB+ | Try 8–14B models, then check the speed is still acceptable | not tested on old hardware yet |

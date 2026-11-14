@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "label": "hp-envy-m6",
+  "machine": "HP Envy m6 laptop (2013), AMD A10-5750M, 8 GB",
+  "notes": "head-to-head; thinking off; rpc-server idle in the background",
+  "date": "2026-11-13",
+  "hardware": {
+    "arch": "x86_64",
+    "logical_cores": 4,
+    "cpu": "AMD A10-5750M APU with Radeon(tm) HD Graphics",
+    "physical_cores": 4,
+    "cpu_features": [
+      "sse4_2",
+      "avx",
+      "f16c",
+      "fma"
+    ],
+    "ram_gb": 7.0,
+    "os": "Ubuntu 24.04.5 LTS",
+    "gpu": null
+  },
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.12.3"
+  },
+  "model": {
+    "name": "Qwen3-8B-Q4_K_M",
+    "file": "Qwen3-8B-Q4_K_M.gguf",
+    "ctx": 4096
+  },
+  "settings": {
+    "ctx": 4096,
+    "threads": null,
+    "repeats": 3,
+    "gen_tokens": 128,
+    "temperature": 0,
+    "seed": 42
+  },
+  "load_s": 21.17,
+  "gen_tps": {
+    "runs": [
+      1.02,
+      1.03,
+      1.03
+    ],
+    "median": 1.03
+  },
+  "prompt_tps": {
+    "runs": [
+      2.4,
+      2.4,
+      2.4
+    ],
+    "median": 2.4
+  },
+  "quality": {
+    "score": 9,
+    "out_of": 10,
+    "items": [
+      {
+        "q": "What is 17 + 26? Answer with just the number.",
+        "answer": "43",
+        "ok": true
+      },
+      {
+        "q": "What is the capital of Australia? Answer with one word.",
+        "answer": "Canberra",
+        "ok": true
+      },
+      {
+        "q": "Spell the word 'house' backwards. Answer with just the letters.",
+        "answer": "esuh",
+        "ok": false
+      },
+      {
+        "q": "A train leaves at 3:15 PM and the trip takes 2 hours 50 minutes. What time does it arrive? Answer like 6:05 PM.",
+        "answer": "Let's add the time:\n\n**3:15 PM + 2 hours = 5:15 PM**  \n**5:15 PM + 50 minutes = 6:05 PM**\n\n**Answer: 6:05 PM**",
+        "ok": true
+      },
+      {
+        "q": "Which is heavier: a kilogram of feathers or a kilogram of steel? Answer in a few words.",
+        "answer": "They weigh the same.",
+        "ok": true
+      },
+      {
+        "q": "Put these numbers in order from smallest to largest: 42, 7, 19, 3, 25. Answer with just the numbers separated by commas.",
+        "answer": "3,7,19,25,42",
+        "ok": true
+      },
+      {
+        "q": "What is the chemical symbol for gold? Answer with just the symbol.",
+        "answer": "Au",
+        "ok": true
+      },
+      {
+        "q": "Tom is taller than Ann. Ann is taller than Bo. Who is the shortest? Answer with one word.",
+        "answer": "Bo",
+        "ok": true
+      },
+      {
+        "q": "How many days are in a leap year? Answer with just the number.",
+        "answer": "366",
+        "ok": true
+      },
+      {
+        "q": "Translate 'thank you' into Spanish. Answer with just the translation.",
+        "answer": "gracias",
+        "ok": true
+      }
+    ]
+  },
+  "peak_rss_gb": 6.79
+}

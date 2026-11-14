@@ -5,7 +5,7 @@ Thank you. The more machines we hear about, the more useful this gets for people
 ## The most useful thing you can send: your machine's numbers
 
 1. Run [`bench/bench.py`](bench/) (see [bench/README](bench/README.md)), or just note what you got from llama.cpp or Ollama.
-2. [Open a "Benchmark result" issue](https://github.com/affordable-home-ai/old-hardware-home-ai/issues/new/choose) and fill in the form: machine, CPU, RAM, model, tokens per second.
+2. [Open a "Benchmark result" issue](../../issues/new/choose) and fill in the form: machine, CPU, RAM, model, tokens per second.
 3. Failures count too. "It was too slow to use" or "it wouldn't load" saves the next person a weekend.
 
 ## Other ways to help

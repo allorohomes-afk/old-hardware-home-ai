@@ -19,6 +19,7 @@ Licenses change, so always check each project's own license before you build on 
 |---|---|---|
 | [IBM Granite 4.0](https://huggingface.co/ibm-granite) (H-Tiny, H-1B) | Fastest small model on our old machines, and holds its speed in long chats. | Apache 2.0 |
 | [Qwen3](https://huggingface.co/Qwen) (4B Instruct, 8B) | A strong small model for 8 GB machines. | Apache 2.0 |
+| [Liquid AI LFM2](https://huggingface.co/LiquidAI) (8B-A1B) | Fastest model on our 2013 8 GB laptop, with less RAM than Granite. | LFM Open License v1.0 (free under its revenue limit; not an OSI open-source license) |
 | [Llama 3.2](https://huggingface.co/meta-llama) (3B) | Our baseline small model on every machine. | Llama 3.2 Community License (has conditions; not an OSI open-source license) |
 | [Gemma](https://huggingface.co/google) (12B) | Tested on the newer laptop. | Gemma Terms of Use (has conditions) |
 
@@ -46,5 +47,5 @@ Licenses change, so always check each project's own license before you build on 
 - **Help in their forums and issue trackers.** Answering a beginner's question is a contribution.
 - If you can afford it, many of these projects accept donations through GitHub Sponsors or Open Collective.
 
-Know a free project that helped you run AI at home on cheap hardware? [Open an issue](https://github.com/affordable-home-ai/old-hardware-home-ai/issues/new/choose) and tell us
+Know a free project that helped you run AI at home on cheap hardware? [Open an issue](../../issues/new/choose) and tell us
 what it did for you. We add projects once we've used them ourselves.
