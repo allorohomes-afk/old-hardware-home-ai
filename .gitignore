@@ -1,3 +1,6 @@
 node.env
 *.iso
 .DS_Store
+kits/pascal-lifeline/downloads/
+kits/pascal-lifeline/work/
+kits/pascal-lifeline/dist/

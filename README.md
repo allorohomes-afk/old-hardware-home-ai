@@ -45,6 +45,9 @@ lists what we used, what it did for us, and how to support it.
 - `kits/headless-ubuntu-autoinstall/`: build a USB stick that installs Ubuntu Server on a spare PC with **no
   screen, keyboard or mouse**, ready for SSH. **Status: the install and first boot work; a bug we found at first
   boot is fixed, and the fix awaits a full reinstall test** (see [findings/05](findings/05-used-server-first-boot.md)).
+- `kits/pascal-lifeline/`: keep NVIDIA's Pascal cards (GTX 10-series, Tesla P40/P100) running local AI after
+  NVIDIA phases them out: a pinned 580 driver and CUDA 12.9 setup, plus a llama.cpp build that is checked for
+  Pascal code. **Status: built and checked on a machine with no graphics card; not yet tested on a Pascal card.**
 - `bench/`: the exact benchmark script and every raw result file behind our speed tables.
 - `tools/`: small scripts we used to measure things (real CPU clock on old AMD chips, speculative-decoding test).
 - `scripts/privacy-check.sh`: the scan we run before every push, so no addresses, names or serial numbers leak.
