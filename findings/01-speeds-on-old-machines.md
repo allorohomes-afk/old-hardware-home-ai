@@ -82,9 +82,13 @@ Llama 3.2 3B on the 2012 desktop failed with a server error, so it isn't in the 
 
    Why it's fast: Granite 4.0 H-Tiny is about 7B in total, but only about 1B is active per token (a "mixture of
    experts"). The cost is RAM: it peaked at about 7 GB. It did run on our 8 GB laptop: 6.9 GB peak in the speed test, but under 5 GB in the long-chat
-   test, even at 16k tokens. The two tests ran the server differently (the speed test used its default settings
-   and ten questions in a row; the long-chat test uses one chat slot and a fresh server for each length). We think
-   that explains the gap, but we haven't confirmed it.
+   test, even at 16k tokens. **The difference is llama-server's prompt cache**, which keeps up to 8 GB of past
+   prompts in RAM by default (`--cache-ram 8192`). The speed test asks many questions in a row and fills it; the
+   long-chat test starts a fresh server for each length. We reran the speed test three ways
+   ([`bench/results/memgap/`](../bench/results/memgap/)): default 6.81 GB, one chat slot (`-np 1`) 6.77 GB, cache
+   off (`-cram 0`) **5.08 GB**, with the same speed and the same 10/10. **On an 8 GB machine, add `-cram 0` (or a
+   small value such as `-cram 512`) to llama-server.** It frees about 1.7 GB; the cost is that switching between
+   different conversations re-reads them instead of reusing them.
 2. **Granite holds its speed in long chats much better than Llama 3.2 3B.** On the 2024 laptop, at 16k tokens,
    Granite kept 63% of its speed and Llama kept 26%. That comes mainly from Granite's **hybrid design**: most of
    its layers are Mamba-2 layers, whose memory doesn't grow with the conversation the way a standard
