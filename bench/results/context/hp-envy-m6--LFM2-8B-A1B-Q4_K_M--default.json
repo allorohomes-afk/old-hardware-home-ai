@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "kind": "context-sweep",
+  "label": "hp-envy-m6",
+  "machine": "HP Envy m6 laptop (2013)",
+  "notes": "",
+  "date": "2026-11-14",
+  "hardware": {
+    "arch": "x86_64",
+    "logical_cores": 4,
+    "cpu": "AMD A10-5750M APU with Radeon(tm) HD Graphics",
+    "physical_cores": 4,
+    "cpu_features": [
+      "sse4_2",
+      "avx",
+      "f16c",
+      "fma"
+    ],
+    "ram_gb": 7.0,
+    "os": "Ubuntu 24.04.5 LTS",
+    "gpu": null
+  },
+  "variant": "default",
+  "extra_flags": "--reasoning-budget 0",
+  "software": {
+    "backend": "llama-server",
+    "runtime": "llama-server b11669-620d2225c",
+    "python": "3.12.3"
+  },
+  "model": {
+    "name": "LFM2-8B-A1B-Q4_K_M",
+    "file": "LFM2-8B-A1B-Q4_K_M.gguf"
+  },
+  "steps": [
+    {
+      "ctx": 2048,
+      "prompt_tokens": 2090,
+      "prompt_tps": 11.97,
+      "gen_tps": 3.91,
+      "wall_s": 190.8,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817. Inventory in the blue shed includes 38 spools of rope stored in rack 12, last",
+      "truncated": null,
+      "peak_rss_gb": 5.2
+    },
+    {
+      "ctx": 8192,
+      "prompt_tokens": 8364,
+      "prompt_tps": 10.65,
+      "gen_tps": 2.27,
+      "wall_s": 813.4,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817. Inventory in the blue shed includes 4 coils of wire stored in the back lot, 6",
+      "truncated": null,
+      "peak_rss_gb": 5.3
+    },
+    {
+      "ctx": 16384,
+      "prompt_tokens": 16779,
+      "prompt_tps": 9.18,
+      "gen_tps": 1.46,
+      "wall_s": 1871.7,
+      "found_fact": true,
+      "answer": "The access code for the blue shed is 4817. The inventory in the blue shed includes 53 bags of paint stored in rack 12, 2",
+      "truncated": null,
+      "peak_rss_gb": 5.44
+    },
+    {
+      "ctx": 32768,
+      "skipped": "predicted 77 min to read (limit 60)"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # 01. How fast is AI on old machines?
 
-Measured 2–3 and 13 November 2026 with [`bench/bench.py`](../bench/). **Every raw result file is in
+Measured 2–3 and 13–14 November 2026 with [`bench/bench.py`](../bench/) and [`bench/context.py`](../bench/). **Every raw result file is in
 [`bench/results/`](../bench/results/)**, so you can check any number here.
 
 ## How we tested
@@ -63,10 +63,14 @@ The model reads a long conversation, then answers. The table shows writing speed
 |---|---|---:|---:|---:|---:|
 | 2012 desktop (llama.cpp) | IBM Granite 4.0 H-Tiny | 10.0 | 7.6 | 5.8 | 3.9 |
 | 2013 laptop (llama.cpp) | Llama 3.2 3B | 1.34 | 0.59 | — | — |
+| 2013 laptop (llama.cpp) | IBM Granite 4.0 H-Tiny | 4.1 | 3.22 | 2.5 | — |
+| 2013 laptop (llama.cpp) | Liquid AI LFM2-8B-A1B | 3.91 | 2.27 | 1.46 | — |
 | 2024 laptop (Ollama) | IBM Granite 4.0 H-Tiny | 28.7 | 24.9 | 18.0 | 17.7 |
 | 2024 laptop (Ollama) | Llama 3.2 3B | 11.6 | 6.0 | 3.0 | 3.0 |
 
-"—" means not run: at that length the 2013 laptop would have needed hours just to read. The same test of
+"—" means not run: at that length the 2013 laptop would have needed more than an hour just to read. Even the 16k
+test took about 28 minutes for Granite and 31 for LFM2 there, almost all of it reading. In every length that ran, the model found a fact
+we hid 40% of the way in. The same test of
 Llama 3.2 3B on the 2012 desktop failed with a server error, so it isn't in the table.
 
 ## What we learned
@@ -77,8 +81,10 @@ Llama 3.2 3B on the 2012 desktop failed with a server error, so it isn't in the 
    under the same conditions, Granite was 1.66× faster.
 
    Why it's fast: Granite 4.0 H-Tiny is about 7B in total, but only about 1B is active per token (a "mixture of
-   experts"). The cost is RAM: it peaked at about 7 GB. It did run on our 8 GB laptop (6.9 GB peak at a 4,096-token
-   context), but with almost nothing to spare, so long chats there would run out of memory.
+   experts"). The cost is RAM: it peaked at about 7 GB. It did run on our 8 GB laptop: 6.9 GB peak in the speed test, but under 5 GB in the long-chat
+   test, even at 16k tokens. The two tests ran the server differently (the speed test used its default settings
+   and ten questions in a row; the long-chat test uses one chat slot and a fresh server for each length). We think
+   that explains the gap, but we haven't confirmed it.
 2. **Granite holds its speed in long chats much better than Llama 3.2 3B.** On the 2024 laptop, at 16k tokens,
    Granite kept 63% of its speed and Llama kept 26%. That comes mainly from Granite's **hybrid design**: most of
    its layers are Mamba-2 layers, whose memory doesn't grow with the conversation the way a standard
@@ -106,12 +112,14 @@ Llama 3.2 3B on the 2012 desktop failed with a server error, so it isn't in the 
    LFM2 used less RAM (5.3 GB vs 6.9) and loaded in 2.4 s instead of 15.6. Granite got 10/10 on the sanity check,
    LFM2 9/10; neither number says much about answer quality. **License note:** Granite is Apache 2.0; LFM2 uses
    Liquid AI's own LFM Open License, which is free for personal use but isn't an OSI open-source license (read
-   it before building a product on it). We haven't tested either at long chat lengths on this laptop yet.
+   it before building a product on it). **In long chats Granite pulled ahead:** at 16k tokens it wrote 2.5 tok/s against LFM2's 1.46, keeping 61% of
+   its short-chat speed against LFM2's 37%. Both stayed near 5 GB of RAM. So: LFM2 for short chats, Granite for
+   long ones and as the all-round pick.
 
 ## Rule of thumb (from our machines only)
 
 | Your RAM | Start with | What we saw on 2012–2013 CPUs |
 |---|---|---|
-| 8 GB | LFM2-8B-A1B or Granite 4.0 H-Tiny (Q4_K_M), keeping chats short; Llama 3.2 3B if RAM is tight | 2013 AMD laptop: LFM2-8B-A1B 5.1 tok/s, Granite 4.6, Llama 3.2 3B 2.5 |
+| 8 GB | Granite 4.0 H-Tiny (Q4_K_M); LFM2-8B-A1B if chats stay short; Llama 3.2 3B if RAM is tight | 2013 AMD laptop: LFM2-8B-A1B 5.1 tok/s, Granite 4.6, Llama 3.2 3B 2.5; at 16k tokens Granite 2.5, LFM2 1.46 |
 | 16 GB | IBM Granite 4.0 H-Tiny (Q4_K_M) | 11.1 tok/s (2012 Intel desktop) |
 | 32 GB+ | Try 8–14B models, then check the speed is still acceptable | not tested on old hardware yet |
