@@ -1,0 +1,22 @@
+{
+  "name": "session-deck",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local dashboard for Claude Code sessions on the Air + read-only MCP bridge for the Claude desktop app",
+  "scripts": {
+    "start": "node server.js",
+    "mcp": "node mcp.js",
+    "postinstall": "chmod +x node_modules/node-pty/prebuilds/*/spawn-helper && bash scripts/make-icons.sh",
+    "icons": "bash scripts/make-icons.sh"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "node-pty": "^1.1.0",
+    "undici": "^8.12.4",
+    "ws": "^8.23.0",
+    "zod": "^4.6.7"
+  }
+}

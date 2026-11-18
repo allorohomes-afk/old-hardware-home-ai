@@ -50,6 +50,7 @@ lists what we used, what it did for us, and how to support it.
   Pascal code. **Status: built and checked on a machine with no graphics card; not yet tested on a Pascal card.**
 - `bench/`: the exact benchmark script and every raw result file behind our speed tables.
 - `tools/`: small scripts we used to measure things (real CPU clock on old AMD chips, speculative-decoding test).
+- `tools/session-deck/`: one window for all your Claude Code sessions on a Mac, with a read-only bridge so the Claude app can review them. Local only.
 - `scripts/privacy-check.sh`: the scan we run before every push, so no addresses, names or serial numbers leak.
 
 ## The basic recipe

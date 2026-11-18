@@ -1,0 +1,19 @@
+{
+  "userName": "Sam",
+  "machineName": "MacBook",
+  "hive": {
+    "ssh": "user@192.168.1.20",
+    "sshOptions": [],
+    "mountCheck": "/srv/storage",
+    "dest": "/srv/storage/backups/mac/claude-sessions",
+    "label": "home server"
+  },
+  "notes": {
+    "url": "https://127.0.0.1:27124",
+    "keychainService": "notes-rest-api",
+    "keychainAccount": "my-vault",
+    "runLogFolder": "Runs",
+    "signature": "sam"
+  },
+  "summaryModel": "qwen2.5:7b"
+}

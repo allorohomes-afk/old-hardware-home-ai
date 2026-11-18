@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="deck-token" content="__TOKEN__">
+<title>Session Deck</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-180.png">
+<meta name="apple-mobile-web-app-title" content="Session Deck">
+<meta name="theme-color" content="#faf9f5">
+<link rel="stylesheet" href="/vendor/xterm.css">
+<style>
+  /* Claude.ai daytime palette: warm ivory paper, dark ink, clay accent */
+  :root {
+    --bg: #faf9f5; --panel: #f0eee6; --line: #e3dfd2; --text: #1f1e1d; --dim: #77736a;
+    --hover: #e9e6dc; --sel: #fff; --busy: #e0a33b; --idle: #5a9e6f; --gone: #b9b4a8;
+    --clay: #d97757; --clay-dark: #b85c3e; --link: #c15f3c; --danger: #c0453a;
+    --screen: #262624; --shadow: rgba(80, 60, 30, .16);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 13px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif; }
+  #app { display: grid; grid-template-columns: 268px 1fr; grid-template-rows: 100vh; height: 100vh; overflow: hidden; }
+  #app.collapsed { grid-template-columns: 0 1fr; }
+  #app.collapsed aside { display: none; }
+
+  aside { min-height: 0; background: var(--panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-width: 0; }
+  .head { display: flex; align-items: center; gap: 8px; padding: 11px 10px 9px 14px; }
+  .head b { flex: 1; font: 600 14px/1 ui-serif, Georgia, "Times New Roman", serif; letter-spacing: .1px; }
+
+  /* 3D rubbery buttons: soft top light, inner glow, a thick bottom lip that squashes on press */
+  button {
+    font: 500 12.5px/1 -apple-system, BlinkMacSystemFont, sans-serif; color: var(--text); cursor: pointer;
+    padding: 7px 13px 8px; border-radius: 999px; border: 1px solid #d9d4c6;
+    background: linear-gradient(#ffffff, #efebe1);
+    box-shadow: inset 0 1px 0 #fff, inset 0 -2px 3px rgba(120, 100, 60, .10), 0 3px 0 #d4cebf, 0 4px 8px var(--shadow);
+    transition: transform .08s ease, box-shadow .08s ease, filter .12s;
+  }
+  button:hover { filter: brightness(1.03); }
+  button:active { transform: translateY(2px); box-shadow: inset 0 1px 2px rgba(120,100,60,.18), 0 1px 0 #d4cebf, 0 1px 3px var(--shadow); }
+  button.primary { color: #fff; border-color: var(--clay-dark); background: linear-gradient(#e58a6a, var(--clay));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -2px 4px rgba(120, 40, 20, .25), 0 3px 0 var(--clay-dark), 0 4px 10px rgba(185, 92, 62, .35); }
+  button.primary:active { box-shadow: inset 0 1px 3px rgba(90,30,10,.35), 0 1px 0 var(--clay-dark), 0 1px 3px rgba(185,92,62,.3); }
+  button.danger { color: #fff; border-color: #9c362d; background: linear-gradient(#d2584c, var(--danger));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -2px 4px rgba(90,20,10,.25), 0 3px 0 #9c362d, 0 4px 10px rgba(160,50,40,.3); }
+  button.danger:active { box-shadow: inset 0 1px 3px rgba(70,15,10,.4), 0 1px 0 #9c362d; }
+  button.more { padding: 3px 8px 5px; font-size: 15px; line-height: 1; color: var(--dim); }
+
+  #list { flex: 1; overflow-y: auto; padding: 2px 8px 8px; }
+  .row { display: grid; grid-template-columns: 10px 1fr auto; gap: 9px; align-items: start; padding: 8px 8px 8px 10px; margin-bottom: 5px;
+    cursor: pointer; border-radius: 12px; border: 1px solid transparent; transition: background .12s, box-shadow .12s; }
+  .row:hover { background: var(--hover); }
+  .row.sel { background: var(--sel); border-color: var(--line); box-shadow: 0 2px 0 var(--line), 0 3px 10px var(--shadow); }
+  .row.sel .t { color: var(--clay-dark); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 4px; background: var(--gone); box-shadow: inset 0 -1px 1px rgba(0,0,0,.15); }
+  .dot.busy { background: var(--busy); box-shadow: 0 0 0 3px rgba(224,163,59,.22); }
+  .dot.idle { background: var(--idle); }
+  .t { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .m { color: var(--dim); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .badges { display: flex; gap: 4px; margin-top: 5px; }
+  .bdg { font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 999px; background: #e8e4d8; color: var(--dim); }
+  .bdg.live { background: #dcebdf; color: #3f7d52; }
+  .bdg.rc { background: #f6e0d6; color: var(--clay-dark); }
+  .bdg.sent { background: #e6e0f1; color: #6a52a3; }
+  .empty { color: var(--dim); padding: 14px; }
+
+  .bridge { border-top: 1px solid var(--line); padding: 10px 12px; display: flex; align-items: center; gap: 9px; }
+  .bridge .lbl { flex: 1; min-width: 0; }
+  .bridge .lbl div:last-child { color: var(--dim); font-size: 11px; }
+
+  main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid var(--line); min-height: 46px; background: var(--bg); }
+  .bar .title { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: 600 14px/1.2 ui-serif, Georgia, serif; }
+  .bar .sub { color: var(--dim); font: 400 12px -apple-system, sans-serif; margin-left: 8px; }
+  #term { flex: 1; min-height: 0; margin: 10px 12px 12px; padding: 10px 4px 4px 12px; background: var(--screen); border-radius: 14px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,.35), 0 1px 0 #fff; }
+  #transcript { flex: 1; min-height: 0; overflow-y: auto; padding: 16px 22px 30px; display: none; }
+  .note { color: var(--dim); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; margin-bottom: 16px; font-size: 12px; }
+  .msg { margin: 0 0 14px; max-width: 860px; }
+  .msg .who { font-size: 11px; color: var(--dim); margin-bottom: 3px; }
+  .msg .txt { white-space: pre-wrap; word-wrap: break-word; }
+  .msg.assistant .txt { font: 15px/1.55 ui-serif, Georgia, serif; }
+  .msg.user .txt { background: #f0eee6; border: 1px solid var(--line); border-radius: 14px; padding: 8px 12px; display: inline-block; }
+  .welcome { margin: auto; color: var(--dim); text-align: center; max-width: 420px; padding: 20px; font: 15px/1.6 ui-serif, Georgia, serif; }
+
+  .menu { position: fixed; z-index: 10; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 5px; min-width: 190px; box-shadow: 0 10px 30px var(--shadow), 0 2px 0 var(--line); }
+  .menu div { padding: 7px 11px; border-radius: 8px; cursor: pointer; }
+  .menu div:hover { background: var(--hover); }
+  .menu .danger { color: var(--danger); }
+  .modal-bg { position: fixed; inset: 0; background: rgba(40, 32, 20, .25); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; z-index: 20; }
+  .modal { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 18px; width: min(440px, 92vw); box-shadow: 0 18px 50px rgba(60,40,10,.25); }
+  .modal h3 { margin: 0 0 6px; font: 600 16px/1.3 ui-serif, Georgia, serif; }
+  .modal p { margin: 0 0 16px; color: var(--dim); }
+  .modal .btns { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .modal input { width: 100%; font: inherit; color: var(--text); background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; margin-bottom: 14px; box-shadow: inset 0 1px 3px rgba(0,0,0,.06); }
+  .modal input:focus { outline: 2px solid rgba(217,119,87,.35); border-color: var(--clay); }
+  #toast { position: fixed; bottom: 16px; right: 16px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 9px 13px; display: none; z-index: 30; max-width: 380px; box-shadow: 0 8px 24px var(--shadow); }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside>
+    <div class="head"><b>Sessions <span id="count" style="color:var(--dim);font-weight:400"></span></b>
+      <button class="primary" id="newBtn" title="Start a new Claude session in the deck">+ New</button></div>
+    <div id="list"></div>
+    <div class="bridge">
+      <span class="dot" id="bDot"></span>
+      <div class="lbl"><div id="bText">Claude app</div><div id="bSub">checking…</div></div>
+      <button id="bBtn" style="display:none">Connect</button>
+      <button id="startClaude" class="primary" title="Open the Claude app">Start Claude</button>
+    </div>
+  </aside>
+  <main>
+    <div class="bar">
+      <button id="toggle" title="Hide/show sessions (⌘B)">☰</button>
+      <div class="title" id="barTitle">Session Deck</div>
+      <button id="popout" style="display:none" title="Pop this session out into its own Terminal window">⧉ Pop out</button>
+      <button id="refresh" style="display:none">Refresh</button>
+      <button class="more" id="deckMore" title="Deck options">⋯</button>
+    </div>
+    <div id="term"></div>
+    <div id="transcript"></div>
+  </main>
+</div>
+<div id="toast"></div>
+
+<script src="/vendor/xterm.js"></script>
+<script src="/vendor/addon-fit.js"></script>
+<script>
+const TOKEN = document.querySelector('meta[name=deck-token]').content
+const $ = (s) => document.querySelector(s)
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+let sessions = [], bridge = {}, selected = null, ws = null, term = null, fit = null
+
+async function api(path, body) {
+  const r = await fetch(path, { method: body ? 'POST' : 'GET', headers: { 'x-deck-token': TOKEN, 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined })
+  const j = await r.json().catch(() => ({}))
+  if (!r.ok) throw new Error(j.error || r.status)
+  return j
+}
+function toast(msg, ms = 3500) { const t = $('#toast'); t.textContent = msg; t.style.display = 'block'; clearTimeout(t._h); t._h = setTimeout(() => (t.style.display = 'none'), ms) }
+const ago = (ms) => { const s = (Date.now() - ms) / 1000; return s < 60 ? 'now' : s < 3600 ? Math.floor(s / 60) + 'm' : s < 86400 ? Math.floor(s / 3600) + 'h' : Math.floor(s / 86400) + 'd' }
+
+async function load() {
+  try { const j = await api('/api/sessions'); sessions = j.sessions; bridge = j.bridge } catch (e) { $('#list').innerHTML = `<div class="empty">${esc(e.message)}</div>`; return }
+  renderList(); renderBridge()
+  if (selected?.startsWith('tmux:')) { // a new session: adopt it once Claude registers it (terminal stays open)
+    const s = sessions.find((x) => x.tmux === selected.slice(5))
+    if (s) { selected = s.sessionId; renderList(); $('#barTitle').innerHTML = `${esc(s.title)}<span class="sub">${esc(s.folder)} · ${esc(s.name)}</span>` }
+  } else if (selected && !sessions.find((s) => s.sessionId === selected)) { selected = null; showWelcome() }
+}
+
+function renderList() {
+  $('#count').textContent = sessions.length ? `· ${sessions.length}` : ''
+  $('#list').innerHTML = sessions.length ? sessions.map((s, i) => `
+    <div class="row ${s.sessionId === selected ? 'sel' : ''}" data-id="${s.sessionId}" title="${esc(s.lastPrompt)}">
+      <span class="dot ${s.status}"></span>
+      <div style="min-width:0">
+        <div class="t">${i < 9 ? `<span style="color:var(--dim);font-weight:400">${i + 1}</span> ` : ''}${esc(s.title)}</div>
+        <div class="m">${esc(s.folder)} · ${s.status} · ${ago(s.updatedAt)}</div>
+        <div class="badges">${s.tmux ? '<span class="bdg live">LIVE</span>' : '<span class="bdg">TAB</span>'}${s.bridged ? '<span class="bdg rc" title="Remote Control: open on claude.ai and the phone app">BRIDGED</span>' : ''}${(bridge.shared || []).includes(s.sessionId) ? '<span class="bdg sent">SENT</span>' : ''}</div>
+      </div>
+      <button class="more" data-more="${s.sessionId}" title="Options">⋯</button>
+    </div>`).join('') : '<div class="empty">No Claude sessions open. Press + New.</div>'
+}
+
+function renderBridge() {
+  const fresh = bridge.configured && (bridge.loaded || (bridge.lastSeen && Date.now() - bridge.lastSeen < 15 * 60 * 1000))
+  $('#bDot').className = 'dot ' + (fresh ? 'idle' : bridge.configured ? 'busy' : '')
+  $('#bText').textContent = fresh ? 'Claude app connected' : bridge.configured ? 'Claude app set up' : 'Claude app: off'
+  $('#bSub').textContent = fresh ? (bridge.lastSeen ? `last read ${ago(bridge.lastSeen)} ago` : 'bridge loaded') : bridge.needsRestart ? 'restart Claude to load the bridge' : bridge.configured ? (bridge.appRunning ? 'bridge not loaded' : 'Claude app is closed') : 'lets Claude review sessions'
+  $('#bBtn').style.display = bridge.configured ? 'none' : ''
+  const sb = $('#startClaude')
+  sb.textContent = bridge.needsRestart ? 'Restart Claude' : 'Start Claude'
+  sb.title = bridge.needsRestart ? 'Quit and reopen the Claude app so it loads the bridge' : bridge.appRunning ? 'Bring the Claude app to the front' : 'Open the Claude app'
+  sb.style.display = bridge.configured ? '' : 'none'
+}
+
+function showWelcome() {
+  closeTerm(); $('#refresh').style.display = 'none'; $('#popout').style.display = 'none'; $('#barTitle').textContent = 'Session Deck'
+  $('#transcript').style.display = 'flex'
+  $('#transcript').innerHTML = '<div class="welcome">Pick a session on the left, or press <b>+ New</b>.<br><br>⌘1–9 jump to a session · ⌘B hides the list</div>'
+}
+
+function closeTerm() { if (ws) { ws.onclose = null; ws.close(); ws = null } if (term) { term.dispose(); term = null } $('#term').style.display = 'none' }
+
+async function select(id) {
+  const s = sessions.find((x) => x.sessionId === id); if (!s) return
+  selected = id; renderList()
+  $('#barTitle').innerHTML = `${esc(s.title)}<span class="sub">${esc(s.folder)} · ${esc(s.name)}</span>`
+  closeTerm(); $('#popout').style.display = ''
+  if (s.tmux) { $('#transcript').style.display = 'none'; $('#refresh').style.display = 'none'; openTerm(s.tmux) }
+  else { $('#refresh').style.display = ''; showTranscript(s) }
+}
+
+function openTerm(name) {
+  $('#term').style.display = 'block'
+  term = new Terminal({ fontFamily: 'SF Mono, Menlo, monospace', fontSize: 13, cursorBlink: true, theme: { background: '#262624', foreground: '#f0eee6', cursor: '#d97757', selectionBackground: 'rgba(217,119,87,.35)' }, scrollback: 5000, macOptionIsMeta: true })
+  fit = new FitAddon.FitAddon(); term.loadAddon(fit); term.open($('#term')); fit.fit(); term.focus()
+  ws = new WebSocket(`ws://${location.host}/term?tmux=${encodeURIComponent(name)}&t=${TOKEN}`)
+  ws.onopen = () => ws.send(`\x00resize:${term.cols}x${term.rows}`)
+  ws.onmessage = (e) => term.write(e.data)
+  ws.onclose = () => term && term.write('\r\n\x1b[90m[session closed]\x1b[0m\r\n')
+  term.onData((d) => ws.readyState === 1 && ws.send(d))
+  term.onResize(({ cols, rows }) => ws.readyState === 1 && ws.send(`\x00resize:${cols}x${rows}`))
+}
+
+async function showTranscript(s) {
+  const box = $('#transcript'); box.style.display = 'block'
+  box.innerHTML = '<div class="note">Loading…</div>'
+  const { messages } = await api('/api/transcript?id=' + s.sessionId).catch(() => ({ messages: [] }))
+  box.innerHTML = `<div class="note">This session is open in a Terminal tab, so it is read-only here (last 60 messages). Sessions started with <b>+ New</b> open live.</div>` +
+    messages.map((m) => `<div class="msg ${m.role}"><div class="who">${m.role === 'user' ? 'You' : 'Claude'} · ${esc((m.time || '').slice(11, 16))}</div><div class="txt">${esc(m.text)}</div></div>`).join('')
+  requestAnimationFrame(() => (box.scrollTop = box.scrollHeight))
+}
+
+function menu(id, x, y) {
+  closeMenu()
+  const m = document.createElement('div'); m.className = 'menu'; m.id = 'menu'
+  const s = sessions.find((x) => x.sessionId === id)
+  m.innerHTML = (s && !s.tmux ? '<div data-a="move">Move into deck</div>' : '') +
+    '<div data-a="save">Save to log</div><div data-a="send">Send to Claude</div><div data-a="end" class="danger">End session…</div>'
+  m.style.left = Math.min(x, innerWidth - 190) + 'px'; m.style.top = Math.min(y, innerHeight - 150) + 'px'
+  m.onclick = (e) => { const a = e.target.dataset.a; closeMenu(); if (a) action(a, id) }
+  document.body.appendChild(m)
+}
+function closeMenu() { $('#menu')?.remove() }
+
+// top-right ⋯: deck-wide options (more get added here later)
+const DECK_ACTIONS = [
+  { label: 'Save all sessions to the Hive', run: async () => {
+      toast('Copying every session to your home server…', 120000)
+      const r = await api('/api/hive/save-all', {})
+      toast(`Saved to the Hive: all transcripts + ${r.open} open session${r.open === 1 ? '' : 's'} as readable copies (${r.dest}).`, 8000)
+  } },
+]
+$('#deckMore').onclick = (e) => {
+  e.stopPropagation(); closeMenu()
+  const m = document.createElement('div'); m.className = 'menu'; m.id = 'menu'
+  m.innerHTML = DECK_ACTIONS.map((a, i) => `<div data-i="${i}">${esc(a.label)}</div>`).join('')
+  const r = e.currentTarget.getBoundingClientRect()
+  m.style.top = r.bottom + 4 + 'px'; m.style.right = innerWidth - r.right + 'px'
+  m.onclick = async (ev) => { const a = DECK_ACTIONS[ev.target.dataset.i]; closeMenu(); if (a) { try { await a.run() } catch (err) { toast('Failed: ' + err.message, 8000) } } }
+  document.body.appendChild(m)
+}
+
+function modal(html) {
+  return new Promise((done) => {
+    const bg = document.createElement('div'); bg.className = 'modal-bg'
+    bg.innerHTML = `<div class="modal">${html}</div>`
+    bg.onclick = (e) => { const v = e.target.dataset.v; if (e.target === bg) { bg.remove(); done(null) } else if (v !== undefined) { const inp = bg.querySelector('input'); bg.remove(); done(inp ? (v === 'ok' ? inp.value : null) : v) } }
+    document.body.appendChild(bg); bg.querySelector('input')?.focus()
+    bg.querySelector('input')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') bg.querySelector('[data-v=ok]').click(); if (e.key === 'Escape') bg.click() })
+  })
+}
+
+async function action(a, id) {
+  const s = sessions.find((x) => x.sessionId === id); if (!s) return
+  try {
+    if (a === 'move') {
+      if (s.status !== 'idle') return toast('It is busy. Move it once it finishes (green dot).', 5000)
+      const v = await modal(`<h3>Move “${esc(s.title)}” into the deck?</h3><p>Its Terminal tab closes Claude, and the same conversation reopens live here. Nothing is lost. You can close that Terminal tab afterwards.</p>
+        <div class="btns"><button data-v="cancel">Cancel</button><button data-v="go" class="primary">Move it</button></div>`)
+      if (v !== 'go') return
+      toast('Moving…', 15000)
+      const { tmux } = await api('/api/move', { id })
+      closeTerm(); selected = 'tmux:' + tmux; renderList()
+      $('#barTitle').innerHTML = `${esc(s.title)}<span class="sub">${esc(s.folder)} · moving into the deck</span>`
+      $('#transcript').style.display = 'none'; $('#refresh').style.display = 'none'; $('#popout').style.display = ''
+      openTerm(tmux); toast('Moved. It is live here now.')
+    }
+    if (a === 'save') { toast('Summarizing on this Mac and saving to the log…', 60000); const r = await api('/api/save', { id }); toast('Saved to ' + r.file) }
+    if (a === 'send') { await api('/api/send', { id }); toast('Sent. A review prompt is on your clipboard: paste it in the Claude app.', 6000); load() }
+    if (a === 'end') {
+      const v = await modal(`<h3>End “${esc(s.title)}”?</h3><p>Save it to the log first? The session closes after the save works. If the save fails, it stays open.</p>
+        <div class="btns"><button data-v="cancel">Cancel</button><button data-v="nosave" class="danger">End without saving</button><button data-v="save" class="primary">Save to log, then end</button></div>`)
+      if (!v || v === 'cancel') return
+      toast(v === 'save' ? 'Saving to the log, then ending…' : 'Ending…', 60000)
+      const r = await api('/api/end', { id, save: v === 'save' })
+      toast(r.saved ? 'Saved to the log and ended.' : 'Session ended.')
+      if (selected === id) { selected = null; showWelcome() }
+      setTimeout(load, 800)
+    }
+  } catch (e) { toast('Failed: ' + e.message + (a === 'end' ? ' (session left open)' : ''), 7000) }
+}
+
+$('#list').addEventListener('click', (e) => {
+  const more = e.target.closest('[data-more]')
+  if (more) { e.stopPropagation(); const r = more.getBoundingClientRect(); return menu(more.dataset.more, r.left, r.bottom + 2) }
+  const row = e.target.closest('.row'); if (row) select(row.dataset.id)
+})
+$('#list').addEventListener('contextmenu', (e) => { const row = e.target.closest('.row'); if (row) { e.preventDefault(); menu(row.dataset.id, e.clientX, e.clientY) } })
+document.addEventListener('click', (e) => { if (!e.target.closest('.menu')) closeMenu() })
+$('#toggle').onclick = () => { $('#app').classList.toggle('collapsed'); setTimeout(() => fit?.fit(), 50) }
+$('#refresh').onclick = () => select(selected)
+$('#popout').onclick = async () => {
+  const s = sessions.find((x) => x.sessionId === selected || 'tmux:' + x.tmux === selected)
+  if (!s) return toast('Wait a moment: the session is still starting.')
+  try { await api('/api/popout', { id: s.sessionId }); toast(s.tmux ? 'Opened in its own Terminal window. It stays live here too.' : 'Brought its Terminal window to the front.') }
+  catch (e) { toast('Failed: ' + e.message, 7000) }
+}
+$('#startClaude').onclick = async () => {
+  const restart = !!bridge.needsRestart
+  if (restart) {
+    const v = await modal(`<h3>Restart the Claude app?</h3><p>It quits and reopens so it loads the Session Deck bridge. Anything running in the app right now (like a Cowork task) stops. Then start a new chat there.</p>
+      <div class="btns"><button data-v="cancel">Cancel</button><button data-v="go" class="primary">Restart Claude</button></div>`)
+    if (v !== 'go') return
+  }
+  try { toast(restart ? 'Restarting Claude…' : 'Opening Claude…', 15000); bridge = await api('/api/claude-app', { restart }); renderBridge(); toast(restart ? 'Claude restarted. Start a new chat there.' : 'Claude is open.') }
+  catch (e) { toast('Failed: ' + e.message, 7000) }
+}
+$('#bBtn').onclick = async () => { try { bridge = await api('/api/bridge/connect', {}); renderBridge(); toast('Added to the Claude app. Quit and reopen Claude to finish.', 7000) } catch (e) { toast('Failed: ' + e.message) } }
+$('#newBtn').onclick = async () => {
+  const cwd = await modal(`<h3>New Claude session</h3><p>Which folder? It runs in the deck, so it stays live here.</p><input value="~/dev/" spellcheck="false"><div class="btns"><button data-v="cancel">Cancel</button><button data-v="ok" class="primary">Start</button></div>`)
+  if (!cwd) return
+  try {
+    const { tmux } = await api('/api/new', { cwd })
+    closeTerm(); selected = 'tmux:' + tmux; renderList()
+    $('#barTitle').innerHTML = `New session<span class="sub">${esc(cwd)}</span>`
+    $('#transcript').style.display = 'none'; $('#refresh').style.display = 'none'; $('#popout').style.display = ''
+    openTerm(tmux)
+  } catch (e) { toast('Failed: ' + e.message) }
+}
+addEventListener('keydown', (e) => {
+  if (!e.metaKey) return
+  if (e.key === 'b') { e.preventDefault(); $('#toggle').click() }
+  const n = Number(e.key); if (n >= 1 && n <= 9 && sessions[n - 1]) { e.preventDefault(); select(sessions[n - 1].sessionId) }
+})
+addEventListener('resize', () => fit?.fit())
+
+showWelcome(); load(); setInterval(load, 4000)
+</script>
+</body>
+</html>
